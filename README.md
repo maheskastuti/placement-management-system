@@ -140,5 +140,3 @@ This project helped in understanding:
 ## Author
 
 Stuti Maheska
-
-Stuti Maheska
