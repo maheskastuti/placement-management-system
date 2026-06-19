@@ -3,7 +3,7 @@ import mysql.connector
 conn = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="Stuti16@PATNA",
+    password="YOUR_PASSWORD",
     database="placement_management"
 )
 
@@ -19,7 +19,7 @@ def get_int(prompt):
         try:
             return int(input(prompt))
         except ValueError:
-            print("  ⚠  Please enter a valid number.")
+            print("Please enter a valid number.")
 
 def get_float(prompt):
     """Keep asking until user enters a valid float."""
@@ -27,7 +27,7 @@ def get_float(prompt):
         try:
             return float(input(prompt))
         except ValueError:
-            print("  ⚠  Please enter a valid number.")
+            print("Please enter a valid number.")
 
 def print_separator():
     print("-" * 45)
@@ -54,7 +54,7 @@ def add_students():
         if choice.lower() != 'y':
             break
 
-    print("✅ Student(s) added successfully.")
+    print("Student(s) added successfully.")
 
 def view_students():
     cursor.execute("SELECT * FROM students")
@@ -75,9 +75,9 @@ def update_student():
     conn.commit()
 
     if cursor.rowcount > 0:
-        print("✅ Student updated successfully.")
+        print("Student updated successfully.")
     else:
-        print("❌ No student found with that ID.")
+        print("No student found with that ID.")
 
 def delete_student():
     student_id = get_int("Enter student ID: ")
@@ -86,9 +86,9 @@ def delete_student():
     conn.commit()
 
     if cursor.rowcount > 0:
-        print("✅ Student deleted successfully.")
+        print("Student deleted successfully.")
     else:
-        print("❌ No student found with that ID.")
+        print("No student found with that ID.")
 
 
 #  COMPANIES
@@ -110,7 +110,7 @@ def add_companies():
         if choice.lower() != 'y':
             break
 
-    print("✅ Company(s) added successfully.")
+    print("Company(s) added successfully.")
 
 def view_companies():
     cursor.execute("SELECT * FROM companies")
@@ -134,9 +134,9 @@ def update_company():
     conn.commit()
 
     if cursor.rowcount > 0:
-        print("✅ Company updated successfully.")
+        print("Company updated successfully.")
     else:
-        print("❌ Company not found.")
+        print("Company not found.")
 
 def delete_company():
     company_id = get_int("Enter company ID: ")
@@ -145,9 +145,9 @@ def delete_company():
     conn.commit()
 
     if cursor.rowcount > 0:
-        print("✅ Company deleted successfully.")
+        print("Company deleted successfully.")
     else:
-        print("❌ Company not found.")
+        print("Company not found.")
 
 
 #  JOBS
@@ -159,7 +159,7 @@ def add_jobs():
 
         cursor.execute("SELECT * FROM companies WHERE company_id = %s", (company_id,))
         if cursor.fetchone() is None:
-            print("❌ Company ID not found. Try again.")
+            print("Company ID not found. Try again.")
             continue
 
         role     = input("Enter role     : ")
@@ -175,7 +175,7 @@ def add_jobs():
         if choice.lower() != 'y':
             break
 
-    print("✅ Job(s) added successfully.")
+    print("Job(s) added successfully.")
 
 def view_jobs():
     query = """
@@ -204,9 +204,9 @@ def update_job():
     conn.commit()
 
     if cursor.rowcount > 0:
-        print("✅ Job updated successfully.")
+        print("Job updated successfully.")
     else:
-        print("❌ Job ID not found.")
+        print("Job ID not found.")
 
 def delete_job():
     job_id = get_int("Enter job ID: ")
@@ -215,9 +215,9 @@ def delete_job():
     conn.commit()
 
     if cursor.rowcount > 0:
-        print("✅ Job deleted successfully.")
+        print("Job deleted successfully.")
     else:
-        print("❌ Job ID not found.")
+        print("Job ID not found.")
 
 
 #  APPLICATIONS
@@ -229,14 +229,14 @@ def apply_job():
 
         cursor.execute("SELECT * FROM students WHERE student_id = %s", (student_id,))
         if cursor.fetchone() is None:
-            print("❌ Student not found.")
+            print("Student not found.")
             continue
 
         job_id = get_int("Enter job ID: ")
 
         cursor.execute("SELECT * FROM jobs WHERE job_id = %s", (job_id,))
         if cursor.fetchone() is None:
-            print("❌ Job not found.")
+            print("Job not found.")
             continue
 
         # ── FEATURE 5: Prevent duplicate applications ──
@@ -245,14 +245,14 @@ def apply_job():
             (student_id, job_id)
         )
         if cursor.fetchone() is not None:
-            print("⚠  This student has already applied for this job.")
+            print("This student has already applied for this job.")
         else:
             cursor.execute(
                 "INSERT INTO applications (student_id, job_id) VALUES (%s, %s)",
                 (student_id, job_id)
             )
             conn.commit()
-            print("✅ Applied successfully.")
+            print("Applied successfully.")
 
         choice = input("Add another application? (y/n): ")
         if choice.lower() != 'y':
@@ -290,9 +290,9 @@ def update_application_status():
     conn.commit()
 
     if cursor.rowcount > 0:
-        print("✅ Application status updated successfully.")
+        print("Application status updated successfully.")
     else:
-        print("❌ Application not found.")
+        print("Application not found.")
 
 
 #  FEATURE 1 – ELIGIBILITY CHECKER (improved output)
@@ -308,7 +308,7 @@ def eligibility_checker():
     company = cursor.fetchone()
 
     if company is None:
-        print("❌ Company not found.")
+        print("Company not found.")
         return
 
     company_name = company[0]
@@ -380,7 +380,7 @@ def placement_statistics():
     top_company = f"{top_company_row[0]} ({top_company_row[1]} applications)" if top_company_row else "N/A"
 
     print_separator()
-    print("       📊 PLACEMENT STATISTICS DASHBOARD")
+    print("PLACEMENT STATISTICS DASHBOARD")
     print_separator()
     print(f"  Total Students          : {total_students}")
     print(f"  Total Companies         : {total_companies}")
@@ -413,7 +413,7 @@ def search_student_by_id():
         print(f"  Branch : {row[3]}")
         print(f"  CGPA   : {row[4]}")
     else:
-        print("❌ Student not found.")
+        print("Student not found.")
     print_separator()
 
 def search_company_by_name():
@@ -432,7 +432,7 @@ def search_company_by_name():
         for row in rows:
             print(f"{row[0]:<5} {row[1]:<20} {row[2]:<15} {row[3]}")
     else:
-        print("❌ No company found with that name.")
+        print("No company found with that name.")
     print_separator()
 
 def search_jobs_by_location():
@@ -457,7 +457,7 @@ def search_jobs_by_location():
         for row in rows:
             print(f"{row[0]:<7} {row[1]:<20} {row[2]:<20} {row[3]}")
     else:
-        print("❌ No jobs found in that location.")
+        print("No jobs found in that location.")
     print_separator()
 
 
@@ -467,7 +467,7 @@ def search_jobs_by_location():
 while True:
 
     print("\n" + "=" * 45)
-    print("      🎓 PLACEMENT MANAGEMENT SYSTEM")
+    print("PLACEMENT MANAGEMENT SYSTEM")
     print("=" * 45)
     print("  --- Students ---")
     print("  1.  Add Student")
@@ -541,7 +541,9 @@ while True:
     elif choice == 20:
         search_jobs_by_location()
     elif choice == 21:
-        print("\n  Thank you! Goodbye. 👋")
+        print("\n  Thank you! Goodbye.")
         break
     else:
-        print("❌ Invalid choice. Please try again.")
+        print("Invalid choice. Please try again.")
+
+
