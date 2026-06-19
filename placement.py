@@ -544,10 +544,6 @@ while True:
         print("\n  Thank you! Goodbye.")
         break
     else:
-<<<<<<< HEAD
         print("Invalid choice. Please try again.")
 
 
-=======
-        print("❌ Invalid choice. Please try again.")
->>>>>>> 3a21a124be119897a3c74fc7b660dfd72e1267c1
